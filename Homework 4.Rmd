@@ -1,0 +1,218 @@
+---
+title: "Homework 4"
+author: "Adrianna Allen"
+date: "Due 3/4/2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(UsingR)
+library(MASS)
+```
+
+Instructions: Complete the following problems using RMarkdown to render a Microsoft Word document. Include code in the space provided. If a direct question is asked, answer that question below the code input for that problem. 
+
+***
+
+## Problem 1 
+
+Determine whether the random variable is discrete or continuous. In each case, state the possible values of the random variable.
+
+a.  The number of light bulbs that are out in the next week in a room with 20 bulbs.
+```{r}
+#Discrete; x = 0, 1, 2, 3, 4...., 20
+```
+
+b.   The amount of snow in Toronto during winter.
+```{r}
+#Continuous; a > 0
+```
+
+c.   The number of hits to a website in a day.
+```{r}
+#Discrete
+```
+
+d.   The square footage of a house.
+```{r}
+#Discrete
+```
+## Problem 2
+
+Determine whether the distribution is a discrete probability distribution. If not, state why.
+
+| x   | P(x) |
+|-----|-----:|
+| 100 |  0.1 |
+| 200 | 0.25 |
+| 300 |  0.2 |
+| 400 | 0.45 |
+| 500 |  0.1 |
+
+```{r}
+#This is not a discrete probability because the P(x) values do not equal 1 nor less than 1. Sum is 1.1.
+```
+
+## Problem 3
+
+In the 2004 baseball season Ichiro Suzuki of the Seattle Mariners set the record for the most hits in the season with a total of 262 hits. In the following probability distribution, the random variable $X$ represents the number of hits Ichiro hit in a game.
+
+| x |   P(x) |
+|---|-------:|
+| 0 | 0.1677 |
+| 1 | 0.3354 |
+| 2 | 0.2857 |
+| 3 | 0.1491 |
+| 4 | 0.0373 |
+| 5 | 0.0248 |
+
+a.   Verify that this is a discrete probability distribution.
+```{r}
+#This is a discrete probability because it is equal to 1. 
+```
+
+b.   Draw a graph of the probability distribution. Describe the shape of the distribution.
+
+```{r}
+
+
+```
+
+c.   Compute and interpret the mean of the random variable $X$.
+
+```{r}
+hits = mean((0 *0.1677) +(1 * 0.3354) +( 2 * 0.2857) + (3* 0.1491) + (4* 0.0373) + (5* 0.0248))
+print(hits)
+#1.6273
+```
+
+d.   Compute the standard deviation of the random variable $X$.
+
+```{r}
+sd(hits)
+#1.233
+```
+
+e.   What is the probability that in a randomly selected game Ichiro got 2 hits?
+
+```{r}
+
+# The probability would be 0.2857.
+```
+
+f.   What is the probability that in a randomly selected game Ichiro got more than one hit?
+
+```{r}
+hits = ( 0.2857 + 0.1491 +  0.0373 + 0.0248)
+print(hits)
+#0.4969
+```
+
+## Problem 4
+
+Determine if the following probability experiments represent a binomial experiment. If the probability experiment is not a binomial experiment, state why.
+
+a.   A random sample of 15 college seniors is obtained, and the individuals selected are asked to state their ages.
+```{r}
+#Binomial Experiment.
+```
+
+b.   An experimental drug is administered to 100 randomly selected individuals, with the number of individuals responding favorably recorded.
+```{r}
+# Not a binomial Experiment. 
+```
+c.   A basketball player who makes 80% of her free throws is asked to shoot free throws until she misses. The number of free-throw attempts is recorded.
+```{r}
+#Not a binomial experiment. There isn't a set number of free throws she is suppose to make.
+```
+## Problem 5
+
+In a recent poll, the Gallup Organization found that 45% of adult Americans believe that the overall state of moral values in United States is poor. Suppose a survey of a random sample of 25 adult Americans is conducted in which they are asked to disclose their feelings on the overall state of moral values in United States.
+
+a.   Find and interpret the probability that exactly 15 of those surveyed feel the state of morals is poor.
+
+```{r}
+dbinom(15,25,0.45)
+```
+
+b.   Find and interpret the probability that no more than 10 of those surveyed feel the state of morals is poor.
+
+```{r}
+pbinom(10,25, 0.45)
+```
+
+c.   Find and interpret the probability that more than 16 of those surveyed feel the state of morals is poor.
+
+```{r}
+1- pbinom(16, 25, 0.45)
+```
+
+d.   Find and interpret the probability that 13 or 14 believe the state of morals is poor.
+
+```{r}
+pbinom(13,25,0.45, lower.tail =  F, log.p =  F) - pbinom(14, 25,0.45, lower.tail =  T, log.p = T)
+
+#0.2103
+```
+
+e.   Would it be unusual to find 20 or more adult Americans believe the overall state of moral values is for any United States? Why?
+
+```{r}
+ 1 - pbinom(20, 25, 0.45) 
+# The probability is low and would be unsual.
+?pbinom
+```
+
+f.  Find and interpret the mean of $X$.
+
+```{r}
+c <- 0:25
+mean(c)
+
+
+```
+
+g.  Find the standard deviation of $X$.
+
+```{r}
+sd(c)
+
+```
+
+## Problem 6
+
+ A telephone company's goal is to have no more than five monthly line failures on any 100 miles of line. The company currently experiences in average of two monthly line failures per 50 miles of line. Let $X$ denote the number of monthly line failures per 100 miles of line. Assuming $X$ has a Poisson distribution:
+ 
+a.   Find the probability that the company will meet its goal on a particular 100 miles of line.
+
+```{r}
+ppois(5,4, lower  =  T)
+#0.7851
+
+```
+
+b.   Find the probability that the company will not meet its goal on a particular 100 miles of line.
+
+```{r}
+1 - ppois(5,4, log = F)
+?dpois
+#0.2149
+```
+
+c.   Find the probability that the company will have no more than five monthly failures on a particular 200 miles of line.
+
+```{r}
+ppois(5, 8, log = F)
+#8 per 200 mi; 0.1912
+
+```
+
+d.   Compute the mean and standard deviation of $X$ for 300 miles of line.
+
+```{r}
+pois <- ppois(5,12, lower = T)
+mean(pois)
+sd(pois)
+```
+
